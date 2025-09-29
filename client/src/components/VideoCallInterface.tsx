@@ -214,10 +214,10 @@ export default function VideoCallInterface({
       </div>
 
       {/* Main Video Grid */}
-      <div className="relative z-10 flex-1 p-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="relative z-10 flex-1 p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Interviewer Video - Main */}
         <div className="lg:col-span-2 relative">
-          <div className="w-full h-full min-h-[400px] bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative">
+          <div className="w-full h-full min-h-[500px] bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative">
             {/* Professional interviewer simulation */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
             <div className="w-full h-full flex items-center justify-center relative">
@@ -261,7 +261,7 @@ export default function VideoCallInterface({
 
         {/* User Video - Sidebar */}
         <div className="relative">
-          <div className="w-full h-full min-h-[300px] bg-slate-800 rounded-2xl overflow-hidden border border-white/10 shadow-xl relative">
+          <div className="w-full h-full min-h-[500px] bg-slate-800 rounded-2xl overflow-hidden border border-white/10 shadow-xl relative">
             {isCameraOn ? (
               <video
                 ref={videoRef}
@@ -316,22 +316,22 @@ export default function VideoCallInterface({
         </div>
       </div>
 
-      {/* Question Panel */}
+      {/* Compact Question Panel */}
       {currentQuestion && (
-        <div className="relative z-10 px-6 pb-4">
-          <div className="bg-slate-800/80 backdrop-blur-md rounded-2xl p-6 border border-white/10 shadow-xl">
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                <User className="w-5 h-5 text-primary" />
+        <div className="relative z-10 px-6 pb-2">
+          <div className="bg-slate-900/60 backdrop-blur-sm rounded-xl p-4 border border-white/5 shadow-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-6 h-6 bg-primary/30 rounded-full flex items-center justify-center flex-shrink-0">
+                <User className="w-3 h-3 text-primary" />
               </div>
-              <div className="flex-1 space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-primary">Current Question</span>
-                  <Badge variant="outline" className="border-white/20 text-white/70 text-xs">
-                    Listen carefully
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs font-medium text-primary/90">Current Question</span>
+                  <Badge variant="outline" className="border-white/10 text-white/60 text-xs px-2 py-0">
+                    Listen
                   </Badge>
                 </div>
-                <p className="text-white text-lg leading-relaxed" data-testid="text-current-question">
+                <p className="text-white/90 text-sm leading-relaxed truncate" data-testid="text-current-question" title={currentQuestion}>
                   {currentQuestion}
                 </p>
               </div>
