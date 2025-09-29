@@ -183,12 +183,12 @@ export default function VideoCallInterface({
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 flex flex-col relative overflow-hidden">
+    <div className="h-screen bg-slate-900 flex flex-col relative overflow-hidden">
       {/* Gradient overlay for depth */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 opacity-90"></div>
       
       {/* Header Bar */}
-      <div className="relative z-10 flex items-center justify-between px-6 py-4 bg-black/20 backdrop-blur-md border-b border-white/10">
+      <div className="relative z-10 flex items-center justify-between px-6 py-3 bg-black/20 backdrop-blur-md border-b border-white/10">
         <div className="flex items-center gap-4">
           <Badge className="bg-red-500/90 text-white border-0 px-3 py-1">
             <div className="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></div>
@@ -214,10 +214,10 @@ export default function VideoCallInterface({
       </div>
 
       {/* Main Video Grid */}
-      <div className="relative z-10 flex-1 p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="relative z-10 flex-1 p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Interviewer Video - Main */}
         <div className="lg:col-span-2 relative">
-          <div className="w-full h-full min-h-[500px] bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative">
+          <div className="w-full h-full min-h-[350px] max-h-[65vh] bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative">
             {/* Professional interviewer simulation */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
             <div className="w-full h-full flex items-center justify-center relative">
@@ -261,7 +261,7 @@ export default function VideoCallInterface({
 
         {/* User Video - Sidebar */}
         <div className="relative">
-          <div className="w-full h-full min-h-[500px] bg-slate-800 rounded-2xl overflow-hidden border border-white/10 shadow-xl relative">
+          <div className="w-full h-full min-h-[350px] max-h-[65vh] bg-slate-800 rounded-2xl overflow-hidden border border-white/10 shadow-xl relative">
             {isCameraOn ? (
               <video
                 ref={videoRef}
@@ -318,7 +318,7 @@ export default function VideoCallInterface({
 
       {/* Compact Question Panel */}
       {currentQuestion && (
-        <div className="relative z-10 px-6 pb-2">
+        <div className="relative z-10 px-4 pb-1">
           <div className="bg-slate-900/60 backdrop-blur-sm rounded-xl p-4 border border-white/5 shadow-lg">
             <div className="flex items-center gap-3">
               <div className="w-6 h-6 bg-primary/30 rounded-full flex items-center justify-center flex-shrink-0">
@@ -341,15 +341,15 @@ export default function VideoCallInterface({
       )}
 
       {/* Modern Control Bar */}
-      <div className="relative z-10 p-6">
+      <div className="relative z-10 p-3">
         <div className="flex items-center justify-center">
-          <div className="bg-black/40 backdrop-blur-xl rounded-2xl p-4 border border-white/10 shadow-2xl">
-            <div className="flex items-center gap-4">
+          <div className="bg-black/40 backdrop-blur-xl rounded-2xl p-3 border border-white/10 shadow-2xl">
+            <div className="flex items-center gap-3">
               <Button
                 variant={isCameraOn ? "default" : "destructive"}
                 size="icon"
                 className={cn(
-                  "h-14 w-14 rounded-full transition-all duration-200 shadow-lg",
+                  "h-11 w-11 rounded-full transition-all duration-200 shadow-lg",
                   isCameraOn 
                     ? "bg-slate-600 hover:bg-slate-500 border-slate-500" 
                     : "bg-red-500 hover:bg-red-600"
@@ -357,14 +357,14 @@ export default function VideoCallInterface({
                 onClick={toggleCamera}
                 data-testid="button-toggle-camera"
               >
-                {isCameraOn ? <Video className="w-6 h-6" /> : <VideoOff className="w-6 h-6" />}
+                {isCameraOn ? <Video className="w-5 h-5" /> : <VideoOff className="w-5 h-5" />}
               </Button>
               
               <Button
                 variant={isMicOn ? "default" : "destructive"}
                 size="icon"
                 className={cn(
-                  "h-14 w-14 rounded-full transition-all duration-200 shadow-lg",
+                  "h-11 w-11 rounded-full transition-all duration-200 shadow-lg",
                   isMicOn 
                     ? "bg-slate-600 hover:bg-slate-500 border-slate-500" 
                     : "bg-red-500 hover:bg-red-600"
@@ -372,17 +372,17 @@ export default function VideoCallInterface({
                 onClick={toggleMic}
                 data-testid="button-toggle-mic"
               >
-                {isMicOn ? <Mic className="w-6 h-6" /> : <MicOff className="w-6 h-6" />}
+                {isMicOn ? <Mic className="w-5 h-5" /> : <MicOff className="w-5 h-5" />}
               </Button>
               
               <Button
                 variant="destructive"
                 size="icon"
-                className="h-16 w-16 rounded-full bg-red-500 hover:bg-red-600 shadow-xl transition-all duration-200 hover:scale-105"
+                className="h-12 w-12 rounded-full bg-red-500 hover:bg-red-600 shadow-xl transition-all duration-200 hover:scale-105"
                 onClick={handleEndCall}
                 data-testid="button-end-call"
               >
-                <PhoneOff className="w-7 h-7" />
+                <PhoneOff className="w-5 h-5" />
               </Button>
             </div>
           </div>
