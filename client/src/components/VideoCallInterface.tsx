@@ -33,6 +33,7 @@ export default function VideoCallInterface({
   const [currentQuestion, setCurrentQuestion] = useState("");
   
   const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
   const startTimeRef = useRef<number>(Date.now());
 
   // Simulate interview questions based on role
@@ -88,21 +89,58 @@ export default function VideoCallInterface({
     return () => clearInterval(interval);
   }, [isConnected]);
 
+  // Media stream management
   useEffect(() => {
-    // Simulate getting user's camera feed
-    if (isCameraOn && videoRef.current) {
-      navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-        .then(stream => {
-          if (videoRef.current) {
+    const startMediaStream = async () => {
+      if (isCameraOn || isMicOn) {
+        try {
+          const constraints = {
+            video: isCameraOn,
+            audio: isMicOn
+          };
+          
+          const stream = await navigator.mediaDevices.getUserMedia(constraints);
+          streamRef.current = stream;
+          
+          if (videoRef.current && isCameraOn) {
             videoRef.current.srcObject = stream;
           }
-        })
-        .catch(err => {
-          console.log('Camera access denied or unavailable:', err);
-          // Continue with simulation
+          
+          console.log('Media stream started:', { video: isCameraOn, audio: isMicOn });
+        } catch (err) {
+          console.log('Media access denied or unavailable:', err);
+          // Fallback: turn off the failed media
+          if (err instanceof Error && err.name === 'NotAllowedError') {
+            setIsCameraOn(false);
+            setIsMicOn(false);
+          }
+        }
+      } else {
+        // Stop current stream when both camera and mic are off
+        stopMediaStream();
+      }
+    };
+
+    const stopMediaStream = () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => {
+          track.stop();
+          console.log('Stopped track:', track.kind);
         });
-    }
-  }, [isCameraOn]);
+        streamRef.current = null;
+      }
+      
+      if (videoRef.current) {
+        videoRef.current.srcObject = null;
+      }
+    };
+
+    startMediaStream();
+
+    return () => {
+      stopMediaStream();
+    };
+  }, [isCameraOn, isMicOn]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -116,13 +154,20 @@ export default function VideoCallInterface({
   };
 
   const toggleCamera = () => {
-    setIsCameraOn(!isCameraOn);
-    console.log('Camera toggled:', !isCameraOn ? 'on' : 'off');
+    const newCameraState = !isCameraOn;
+    setIsCameraOn(newCameraState);
+    console.log('Camera toggled:', newCameraState ? 'on' : 'off');
+    
+    // Immediate feedback for UI
+    if (!newCameraState && videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
   };
 
   const toggleMic = () => {
-    setIsMicOn(!isMicOn);
-    console.log('Microphone toggled:', !isMicOn ? 'on' : 'off');
+    const newMicState = !isMicOn;
+    setIsMicOn(newMicState);
+    console.log('Microphone toggled:', newMicState ? 'on' : 'off');
   };
 
   if (!isConnected) {
