@@ -95,6 +95,7 @@ export default function InterviewApp() {
       {currentState === "interview" && userData && (
         <VideoCallInterface
           role={userData.targetRole}
+          userData={userData}
           onEndCall={handleInterviewEnd}
         />
       )}
