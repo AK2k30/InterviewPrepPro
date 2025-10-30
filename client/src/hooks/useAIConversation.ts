@@ -17,6 +17,7 @@ interface UserContext {
   name: string;
   currentRole: string;
   targetRole: string;
+  userId?: string;
 }
 
 export const useAIConversation = (userContext?: UserContext) => {
@@ -180,6 +181,7 @@ Start the interview by greeting ${name} and acknowledging their transition from 
             { role: 'system', content: getSystemMessage() },
             ...conversationMessages
           ],
+          userId: userContext?.userId
         }),
       });
       

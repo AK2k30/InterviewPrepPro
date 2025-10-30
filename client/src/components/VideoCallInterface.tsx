@@ -290,7 +290,7 @@ export default function VideoCallInterface({
             {/* AI Speaking Video */}
             <video
               ref={aiVideoRef}
-              className="w-full h-full object-cover absolute inset-0 transition-opacity duration-500"
+              className="w-full h-full object-cover absolute inset-0"
               loop
               muted
               playsInline
@@ -304,7 +304,7 @@ export default function VideoCallInterface({
             {/* AI Idle Video */}
             <video
               ref={aiIdleVideoRef}
-              className="w-full h-full object-cover absolute inset-0 transition-opacity duration-500"
+              className="w-full h-full object-cover absolute inset-0"
               loop
               muted
               playsInline
