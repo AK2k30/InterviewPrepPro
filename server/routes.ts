@@ -52,7 +52,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Analyze resume with vision model
       const analysis = await groq.chat.completions.create({
-        model: "meta-llama/llama-4-maverick-17b-128e-instruct",
+        model: "openai/gpt-oss-120b",
         messages: [
           {
             role: "user",
@@ -132,7 +132,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
 
         const completion = await groq.chat.completions.create({
-          model: 'meta-llama/llama-4-maverick-17b-128e-instruct',
+          model: 'openai/gpt-oss-120b',
           messages: visionMessages,
           temperature: 1,
           max_completion_tokens: 300,
@@ -168,8 +168,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { text } = req.body;
 
       const response = await groq.audio.speech.create({
-        model: "playai-tts",
-        voice: "Arista-PlayAI",
+        model: "canopylabs/orpheus-v1-english",
+        voice: "diana",
         input: text,
         response_format: "wav"
       });

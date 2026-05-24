@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LinkedIn Test</title>
+</head>
+<body>
+
+  <h1>LinkedIn Connect Test 🚀</h1>
+
+  <button onclick="connect()">Connect LinkedIn</button>
+  <button onclick="getProfile()">Get Profile</button>
+  <button onclick="download()">Download JSON</button>
+
+  <pre id="output"></pre>
+
+  <script>
+    async function connect() {
+      try {
+        const res = await fetch("http://localhost:5000/connect-linkedin");
+        const data = await res.json();
+
+        console.log("Backend response:", data);
+
+        if (!data.auth_url) {
+          alert("❌ auth_url missing. Check backend logs!");
+          return;
+        }
+
+        // ✅ redirect to LinkedIn login
+        window.location.href = data.auth_url;
+
+      } catch (err) {
+        console.error(err);
+        alert("Error connecting to backend");
+      }
+    }
+
+    async function getProfile() {
+      try {
+        const res = await fetch("http://localhost:5000/profile");
+        const data = await res.json();
+
+        document.getElementById("output").innerText =
+          JSON.stringify(data, null, 2);
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function download() {
+      window.open("http://localhost:5000/download");
+    }
+  </script>
+
+</body>
+</html>
